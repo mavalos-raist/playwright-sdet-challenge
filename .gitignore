@@ -8,3 +8,4 @@ storageState
 *.log
 .DS_Store
 coverage
+.claude
