@@ -39,9 +39,13 @@ export interface UserProfile {
   books: UserBook[]
 }
 
-export interface StoredUserInfo {
+export interface AuthState {
   userId: string
-  username: string
+  userName: string
   token: string
+  password?: string
   expires?: string
+  isLoggedIn?: boolean
 }
+
+export type StoredUserInfo = AuthState
