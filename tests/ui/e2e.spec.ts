@@ -54,8 +54,9 @@ test(
       const afterRemove = await getUserProfile(page, userId, token)
       expect(afterRemove.books).toHaveLength(0)
 
-      // Verify remove — UI
+      // Verify remove — UI (guard: confirm profile loaded before checking book is absent)
       await page.goto('/profile')
+      await expect(page.nativePage.getByText(user.userName)).toBeVisible()
       await expect(page.nativePage.getByText(targetBook.title)).toBeHidden()
     } finally {
       await cleanupUserData(apiContext, userId, token).catch(() => {})

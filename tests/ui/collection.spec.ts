@@ -94,8 +94,9 @@ test(
       const afterProfile = await getUserProfile(page, userId, token)
       expect(afterProfile.books).toHaveLength(0)
 
-      // Assert UI
+      // Assert UI — verify profile loaded correctly before checking book is absent
       await page.goto('/profile')
+      await expect(page.nativePage.getByText(user.userName)).toBeVisible()
       await expect(page.nativePage.getByText(targetBook.title)).toBeHidden()
     } finally {
       await cleanupUserData(apiContext, userId, token).catch(() => {})
@@ -143,8 +144,9 @@ test(
       const afterProfile = await getUserProfile(page, userId, token)
       expect(afterProfile.books).toHaveLength(0)
 
-      // Assert UI
+      // Assert UI — verify profile loaded correctly before checking books are absent
       await page.goto('/profile')
+      await expect(page.nativePage.getByText(user.userName)).toBeVisible()
       await expect(page.nativePage.getByText(book1.title)).toBeHidden()
       await expect(page.nativePage.getByText(book2.title)).toBeHidden()
     } finally {

@@ -1,6 +1,8 @@
 import { test, expect } from '@/fixtures/test'
 import { listBooks, getBook } from '@/functions/books'
 
+test.use({ storageState: { cookies: [], origins: [] } })
+
 test(
   'Books > Catalog > List all books and verify dataset',
   {
@@ -29,8 +31,6 @@ test(
     expect(detailedBook.title).toBe(firstBook.title)
   }
 )
-
-test.use({ storageState: { cookies: [], origins: [] } })
 
 test(
   'Books > Catalog > Search and open detail view',

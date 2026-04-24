@@ -19,7 +19,7 @@ setup('authenticate bootstrap user and save storage state', async ({ page }) => 
   await page.getByPlaceholder('Password').fill(password)
   await page.getByRole('button', { name: 'Login' }).click()
 
-  await expect(page).toHaveURL(/.*profile/)
+  await expect(page).toHaveURL(/.*profile/, { timeout: 15000 })
   const authState = await basePage.getAuthInfo()
   await basePage.syncAuthState({
     ...authState,

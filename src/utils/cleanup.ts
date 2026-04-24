@@ -7,6 +7,10 @@ export async function cleanupUserData(
   userId: string,
   token: string
 ): Promise<void> {
-  await clearCollection(apiContext, userId, token).catch(() => {})
-  await deleteUser(apiContext, token, userId).catch(() => {})
+  await clearCollection(apiContext, userId, token).catch((err: unknown) => {
+    console.warn(`[cleanup] clearCollection failed for user ${userId}: ${String(err)}`)
+  })
+  await deleteUser(apiContext, token, userId).catch((err: unknown) => {
+    console.warn(`[cleanup] deleteUser failed for user ${userId}: ${String(err)}`)
+  })
 }

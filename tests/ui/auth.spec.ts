@@ -28,7 +28,7 @@ test(
 
     // Assert
     await expect(page.nativePage).toHaveURL(/.*login/)
-    await expect(page.nativePage.locator('#name')).toContainText(/invalid|fail|unauthorized/i)
+    await expect(page.nativePage.getByText(/invalid username or password/i)).toBeVisible()
 
     const authSnapshot = await page.nativePage.evaluate(() => {
       return {
