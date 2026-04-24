@@ -2,15 +2,20 @@ import { BaseAPI } from '@/api/baseApi'
 import { clearCollection } from '@/functions/books'
 import { deleteUser } from '@/functions/auth'
 
+function extractMessage(err: unknown): string {
+  if (err instanceof Error) return err.message.split('\n')[0]
+  return String(err)
+}
+
 export async function cleanupUserData(
   apiContext: BaseAPI,
   userId: string,
   token: string
 ): Promise<void> {
   await clearCollection(apiContext, userId, token).catch((err: unknown) => {
-    console.warn(`[cleanup] clearCollection failed for user ${userId}: ${String(err)}`)
+    console.warn(`[cleanup] clearCollection failed for user ${userId}: ${extractMessage(err)}`)
   })
   await deleteUser(apiContext, token, userId).catch((err: unknown) => {
-    console.warn(`[cleanup] deleteUser failed for user ${userId}: ${String(err)}`)
+    console.warn(`[cleanup] deleteUser failed for user ${userId}: ${extractMessage(err)}`)
   })
 }
